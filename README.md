@@ -90,19 +90,19 @@ Built with the Luoyang Forbidden City central axis as its spatial metaphor, the 
 
 ### Core Modules / 核心模块
 
-| Module / 模块 | Route / 路由 | Description / 说明 |
-|---------------|-------------|-------------------|
-| **统一看板** / Dashboard | `/dashboard` | Tab 式控制中心，聚合 9 大面板：旨意/朝堂/调度/官员/模型/技能/奏折/模板/要闻。<br/>Central control hub with 9 tabbed panels. |
-| **朝堂议政** / Court | `/court` | 多 Agent 实时讨论，中轴线节点叙事 + 天子驾六交互。<br/>Multi-agent real-time discussion with central-axis narrative. |
-| **旨意看板** / Edict Board | `/edict` | 圣旨式任务管理，七阶 Pipeline 流转追踪。<br/>Imperial-edict task management with 7-stage pipeline tracking. |
-| **旨意工坊** / Edict Create | `/edict/create` | 圣旨卷轴样式的拟旨界面。<br/>Scroll-style edict creation interface. |
-| **敕令详情** / Edict Detail | `/edict/:id` | 签章链 + 全流转日志。<br/>Seal chain + full routing log. |
-| **太史监候** / Monitor | `/monitor` | 系统运行状态监控，Agent 健康检查，告警阈值配置。<br/>System monitoring, agent health checks, alert thresholds. |
-| **勋章墙** / Honors | `/honors` | 17 种古典主题成就徽章，1–6 星稀有度分级。<br/>17 classical-themed achievement badges, 1–6 star rarity tiers. |
-| **王朝时间轴** / Timeline | `/timeline` | 十三王朝技能矩阵时间线。<br/>Thirteen-dynasty skill matrix timeline. |
-| **双星桥** / Bridge | `/bridge` | YYC³ AI Family (8 members) 与三省六部 (12 ministers) 协同映射。<br/>Cross-mapping between AI Family and court ministers. |
-| **宫阙规制** / Settings | `/settings` | 系统配置：朝堂/旨意/令牌/通知/安全/外观/典章。<br/>System settings across 7 categories. |
-| **欢迎入口** / Welcome | `/welcome` | 玉玺启宫门动画入口。<br/>Jade seal animated entry. |
+| Module / 模块               | Route / 路由    | Description / 说明                                                                                                          |
+| --------------------------- | --------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| **统一看板** / Dashboard    | `/dashboard`    | Tab 式控制中心，聚合 9 大面板：旨意/朝堂/调度/官员/模型/技能/奏折/模板/要闻。<br/>Central control hub with 9 tabbed panels. |
+| **朝堂议政** / Court        | `/court`        | 多 Agent 实时讨论，中轴线节点叙事 + 天子驾六交互。<br/>Multi-agent real-time discussion with central-axis narrative.        |
+| **旨意看板** / Edict Board  | `/edict`        | 圣旨式任务管理，七阶 Pipeline 流转追踪。<br/>Imperial-edict task management with 7-stage pipeline tracking.                 |
+| **旨意工坊** / Edict Create | `/edict/create` | 圣旨卷轴样式的拟旨界面。<br/>Scroll-style edict creation interface.                                                         |
+| **敕令详情** / Edict Detail | `/edict/:id`    | 签章链 + 全流转日志。<br/>Seal chain + full routing log.                                                                    |
+| **太史监候** / Monitor      | `/monitor`      | 系统运行状态监控，Agent 健康检查，告警阈值配置。<br/>System monitoring, agent health checks, alert thresholds.              |
+| **勋章墙** / Honors         | `/honors`       | 17 种古典主题成就徽章，1–6 星稀有度分级。<br/>17 classical-themed achievement badges, 1–6 star rarity tiers.                |
+| **王朝时间轴** / Timeline   | `/timeline`     | 十三王朝技能矩阵时间线。<br/>Thirteen-dynasty skill matrix timeline.                                                        |
+| **双星桥** / Bridge         | `/bridge`       | YYC³ AI Family (8 members) 与三省六部 (12 ministers) 协同映射。<br/>Cross-mapping between AI Family and court ministers.    |
+| **宫阙规制** / Settings     | `/settings`     | 系统配置：朝堂/旨意/令牌/通知/安全/外观/典章。<br/>System settings across 7 categories.                                     |
+| **欢迎入口** / Welcome      | `/welcome`      | 玉玺启宫门动画入口。<br/>Jade seal animated entry.                                                                          |
 
 ### Key Highlights / 亮点
 
@@ -244,21 +244,21 @@ sequenceDiagram
 
 ## Tech Stack / 技术栈
 
-| Technology / 技术 | Version / 版本 | Purpose / 用途 |
-|-------------------|---------------|----------------|
-| **React** | 19.1 | UI framework (with `useOptimistic`, `useActionState`) |
-| **TypeScript** | 5.9 | Type safety (strict mode, `tsc --noEmit`) |
-| **Vite** | 6.4 | Build tool (route-level code-splitting + vendor chunks) |
-| **TailwindCSS** | 4.1 | Styling system (CSS-first `@theme` tokens) |
-| **Zustand** | 5 | State management (single store + polling/WS) |
-| **react-router** | 8.2 | Routing (`createBrowserRouter` + `lazy()`) |
-| **shadcn/ui + Radix UI** | — | UI primitives (40+ components, accessible) |
-| **motion** | 12 | Animation engine (framer-motion v12 unified) |
-| **Recharts** | 3.8 | Chart visualization |
-| **Vitest** | 3 | Unit testing (with `@testing-library/react`) |
-| **ESLint** | 9 | Code linting (flat config, TS + React Hooks) |
-| **Prettier** | 3 | Code formatting |
-| **Docker** | — | Containerization (multi-stage, nginx runtime, ~25 MB) |
+| Technology / 技术        | Version / 版本 | Purpose / 用途                                          |
+| ------------------------ | -------------- | ------------------------------------------------------- |
+| **React**                | 19.1           | UI framework (with `useOptimistic`, `useActionState`)   |
+| **TypeScript**           | 5.9            | Type safety (strict mode, `tsc --noEmit`)               |
+| **Vite**                 | 6.4            | Build tool (route-level code-splitting + vendor chunks) |
+| **TailwindCSS**          | 4.1            | Styling system (CSS-first `@theme` tokens)              |
+| **Zustand**              | 5              | State management (single store + polling/WS)            |
+| **react-router**         | 8.2            | Routing (`createBrowserRouter` + `lazy()`)              |
+| **shadcn/ui + Radix UI** | —              | UI primitives (40+ components, accessible)              |
+| **motion**               | 12             | Animation engine (framer-motion v12 unified)            |
+| **Recharts**             | 3.8            | Chart visualization                                     |
+| **Vitest**               | 3              | Unit testing (with `@testing-library/react`)            |
+| **ESLint**               | 9              | Code linting (flat config, TS + React Hooks)            |
+| **Prettier**             | 3              | Code formatting                                         |
+| **Docker**               | —              | Containerization (multi-stage, nginx runtime, ~25 MB)   |
 
 ---
 
@@ -306,44 +306,44 @@ pnpm preview         # 预览生产构建
 
 ## Scripts Reference / 命令参考
 
-| Command / 命令 | Description / 说明 |
-|----------------|-------------------|
-| `pnpm dev` | Start Vite dev server (port 3122, LAN accessible) |
-| `pnpm build` | Production build (`dist/`, route-splitting + vendor chunks) |
-| `pnpm preview` | Preview production build locally |
-| `pnpm typecheck` | `tsc --noEmit` strict type check (must be 0 errors) |
-| `pnpm lint` | ESLint v9 flat config check |
-| `pnpm lint:fix` | ESLint auto-fix |
-| `pnpm format` | Prettier format all source/config files |
-| `pnpm format:check` | Prettier compliance check (CI gate) |
-| `pnpm test` | Run Vitest test suite |
-| `pnpm test:watch` | Vitest watch mode |
-| `pnpm test:coverage` | Run with v8 coverage report |
-| `pnpm check:circular` | madge circular dependency detection |
-| `pnpm check:dead` | knip dead code / unused dependency check |
-| `pnpm check:all` | Full CI gate: typecheck → lint → test → build |
-| `pnpm version:patch` | Bump patch version (`npm version patch`) |
-| `pnpm version:minor` | Bump minor version |
-| `pnpm version:major` | Bump major version |
+| Command / 命令        | Description / 说明                                          |
+| --------------------- | ----------------------------------------------------------- |
+| `pnpm dev`            | Start Vite dev server (port 3122, LAN accessible)           |
+| `pnpm build`          | Production build (`dist/`, route-splitting + vendor chunks) |
+| `pnpm preview`        | Preview production build locally                            |
+| `pnpm typecheck`      | `tsc --noEmit` strict type check (must be 0 errors)         |
+| `pnpm lint`           | ESLint v9 flat config check                                 |
+| `pnpm lint:fix`       | ESLint auto-fix                                             |
+| `pnpm format`         | Prettier format all source/config files                     |
+| `pnpm format:check`   | Prettier compliance check (CI gate)                         |
+| `pnpm test`           | Run Vitest test suite                                       |
+| `pnpm test:watch`     | Vitest watch mode                                           |
+| `pnpm test:coverage`  | Run with v8 coverage report                                 |
+| `pnpm check:circular` | madge circular dependency detection                         |
+| `pnpm check:dead`     | knip dead code / unused dependency check                    |
+| `pnpm check:all`      | Full CI gate: typecheck → lint → test → build               |
+| `pnpm version:patch`  | Bump patch version (`npm version patch`)                    |
+| `pnpm version:minor`  | Bump minor version                                          |
+| `pnpm version:major`  | Bump major version                                          |
 
 ---
 
 ## Routes / 路由
 
-| Path / 路径 | Page / 页面 | Description / 说明 | Lazy |
-|-------------|------------|-------------------|------|
-| `/welcome` | Welcome | 玉玺启宫门动画入口 / Jade seal entry animation | ✅ |
-| `/` | RootLayout | 壳布局，`index` 重定向到 `/welcome` / Shell layout | ✅ |
-| `/dashboard` | Dashboard | 统一看板 (9-tab 面板) / Central hub | ✅ |
-| `/court` | Court | 朝堂议政 — 中轴线 + 天子驾六 / Court discussion | ✅ |
-| `/timeline` | Timeline | 十三王朝技能矩阵 / 13-dynasty skill matrix | ✅ |
-| `/honors` | Honors | 勋章墙 (17 徽章) / Achievement honors wall | ✅ |
-| `/edict` | EdictBoard | 旨意看板 — 七阶流转 / Edict pipeline board | ✅ |
-| `/edict/create` | EdictCreate | 旨意工坊 — 拟旨 / Edict creation workshop | ✅ |
-| `/edict/:id` | EdictDetail | 敕令详情 — 签章链 / Edict detail with seal chain | ✅ |
-| `/monitor` | TaishiMonitor | 太史监候 — 系统监控 / System monitoring | ✅ |
-| `/settings` | PalaceRegulation | 宫阙规制 — 系统设置 / System settings | ✅ |
-| `/bridge` | DualStarBridge | 双星桥 — Family × Dynasty 映射 / Cross-mapping bridge | ✅ |
+| Path / 路径     | Page / 页面      | Description / 说明                                    | Lazy |
+| --------------- | ---------------- | ----------------------------------------------------- | ---- |
+| `/welcome`      | Welcome          | 玉玺启宫门动画入口 / Jade seal entry animation        | ✅   |
+| `/`             | RootLayout       | 壳布局，`index` 重定向到 `/welcome` / Shell layout    | ✅   |
+| `/dashboard`    | Dashboard        | 统一看板 (9-tab 面板) / Central hub                   | ✅   |
+| `/court`        | Court            | 朝堂议政 — 中轴线 + 天子驾六 / Court discussion       | ✅   |
+| `/timeline`     | Timeline         | 十三王朝技能矩阵 / 13-dynasty skill matrix            | ✅   |
+| `/honors`       | Honors           | 勋章墙 (17 徽章) / Achievement honors wall            | ✅   |
+| `/edict`        | EdictBoard       | 旨意看板 — 七阶流转 / Edict pipeline board            | ✅   |
+| `/edict/create` | EdictCreate      | 旨意工坊 — 拟旨 / Edict creation workshop             | ✅   |
+| `/edict/:id`    | EdictDetail      | 敕令详情 — 签章链 / Edict detail with seal chain      | ✅   |
+| `/monitor`      | TaishiMonitor    | 太史监候 — 系统监控 / System monitoring               | ✅   |
+| `/settings`     | PalaceRegulation | 宫阙规制 — 系统设置 / System settings                 | ✅   |
+| `/bridge`       | DualStarBridge   | 双星桥 — Family × Dynasty 映射 / Cross-mapping bridge | ✅   |
 
 All routes use react-router v8 `lazy()` for **route-level code-splitting** — each page loads on-demand as a separate chunk.
 
@@ -496,12 +496,12 @@ Tag v*.*.* push:
 
 ### Workflow Details / 工作流详情
 
-| Workflow | Trigger | Key Actions | Artifacts |
-|----------|---------|-------------|-----------|
-| **CI** | Push (main/develop), PR | Typecheck, Lint, Test, Build | Coverage report, Build output |
-| **Deploy Pages** | CI success on main | Build → Deploy → Smoke test | `dist/` on GitHub Pages |
-| **Lighthouse CI** | Deploy success | Performance audit (3 URLs) | Lighthouse report |
-| **Release** | Tag `v*.*.*` | Docker multi-arch build + GitHub Release | Docker image, Release notes |
+| Workflow          | Trigger                 | Key Actions                              | Artifacts                     |
+| ----------------- | ----------------------- | ---------------------------------------- | ----------------------------- |
+| **CI**            | Push (main/develop), PR | Typecheck, Lint, Test, Build             | Coverage report, Build output |
+| **Deploy Pages**  | CI success on main      | Build → Deploy → Smoke test              | `dist/` on GitHub Pages       |
+| **Lighthouse CI** | Deploy success          | Performance audit (3 URLs)               | Lighthouse report             |
+| **Release**       | Tag `v*.*.*`            | Docker multi-arch build + GitHub Release | Docker image, Release notes   |
 
 ### Prerequisites / 前置配置
 
@@ -549,12 +549,12 @@ pnpm preview                  # Local preview on port 4173
 
 ## Testing / 测试
 
-| Suite | File | Cases | Focus |
-|-------|------|-------|-------|
-| Store | `src/app/store.test.ts` | 37 | State management, polling, edge cases |
-| API layer | `src/app/api.test.ts` | 49 | Fetch wrapper, mock fallback, error handling |
-| i18n | `src/app/i18n.test.ts` | 22 | Translation lookup, locale switching, fallback chains |
-| Components | (various) | 212 | UI component rendering, interaction, accessibility |
+| Suite      | File                    | Cases | Focus                                                 |
+| ---------- | ----------------------- | ----- | ----------------------------------------------------- |
+| Store      | `src/app/store.test.ts` | 37    | State management, polling, edge cases                 |
+| API layer  | `src/app/api.test.ts`   | 49    | Fetch wrapper, mock fallback, error handling          |
+| i18n       | `src/app/i18n.test.ts`  | 22    | Translation lookup, locale switching, fallback chains |
+| Components | (various)               | 212   | UI component rendering, interaction, accessibility    |
 
 **Total**: 320 test cases across 10 files, 92.93% statement coverage.
 
@@ -568,33 +568,33 @@ pnpm test:coverage       # Run with coverage report
 
 ## Code Quality / 代码质量
 
-| Metric | Status | Target |
-|--------|--------|--------|
-| TypeScript errors | **0** (strict mode) | 0 |
-| ESLint errors/warnings | **0/0** | 0/0 |
-| Prettier compliance | **100%** | 100% |
-| Test pass rate | **100%** (320/320) | 100% |
-| Statement coverage | **92.93%** | ≥80% |
-| Branch coverage | **84.38%** | ≥75% |
-| Circular dependencies | **0** | 0 |
-| Dead code (knip) | **0 unused** | 0 |
-| Bundle size (initial) | **~294 kB gzip** | — |
+| Metric                 | Status              | Target |
+| ---------------------- | ------------------- | ------ |
+| TypeScript errors      | **0** (strict mode) | 0      |
+| ESLint errors/warnings | **0/0**             | 0/0    |
+| Prettier compliance    | **100%**            | 100%   |
+| Test pass rate         | **100%** (320/320)  | 100%   |
+| Statement coverage     | **92.93%**          | ≥80%   |
+| Branch coverage        | **84.38%**          | ≥75%   |
+| Circular dependencies  | **0**               | 0      |
+| Dead code (knip)       | **0 unused**        | 0      |
+| Bundle size (initial)  | **~294 kB gzip**    | —      |
 
 ---
 
 ## Documentation / 文档导航
 
-| Document / 文档 | Description / 说明 |
-|-----------------|-------------------|
-| [AGENTS.md](AGENTS.md) | **Agent Collaboration Guide** — commands, architecture, pitfalls, deployment. Must-read for new contributors. |
-| [CHANGELOG.md](CHANGELOG.md) | Version history (Keep a Changelog format). |
-| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Detailed architecture overview. |
-| [docs/API.md](docs/API.md) | API interface documentation. |
-| [docs/OPERATIONS.md](docs/OPERATIONS.md) | Engineering summary + operations manual + troubleshooting. |
-| [docs/ROADMAP.md](docs/ROADMAP.md) | P0–P5 iteration roadmap (all phases closed). |
-| [docs/QUALITY_REPORT.md](docs/QUALITY_REPORT.md) | Code quality audit report (Grade A). |
-| [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md) | Contribution guide. |
-| [docs/guidelines/Guidelines.md](docs/guidelines/Guidelines.md) | Full design system specification (typography, colors, motifs, animation). |
+| Document / 文档                                                | Description / 说明                                                                                            |
+| -------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| [AGENTS.md](AGENTS.md)                                         | **Agent Collaboration Guide** — commands, architecture, pitfalls, deployment. Must-read for new contributors. |
+| [CHANGELOG.md](CHANGELOG.md)                                   | Version history (Keep a Changelog format).                                                                    |
+| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)                   | Detailed architecture overview.                                                                               |
+| [docs/API.md](docs/API.md)                                     | API interface documentation.                                                                                  |
+| [docs/OPERATIONS.md](docs/OPERATIONS.md)                       | Engineering summary + operations manual + troubleshooting.                                                    |
+| [docs/ROADMAP.md](docs/ROADMAP.md)                             | P0–P5 iteration roadmap (all phases closed).                                                                  |
+| [docs/QUALITY_REPORT.md](docs/QUALITY_REPORT.md)               | Code quality audit report (Grade A).                                                                          |
+| [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md)                   | Contribution guide.                                                                                           |
+| [docs/guidelines/Guidelines.md](docs/guidelines/Guidelines.md) | Full design system specification (typography, colors, motifs, animation).                                     |
 
 ---
 
@@ -603,6 +603,7 @@ pnpm test:coverage       # Run with coverage report
 We welcome contributions of all kinds! Please see [CONTRIBUTING.md](docs/CONTRIBUTING.md) for detailed guidelines.
 
 **Quick checklist**:
+
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
 3. Make your changes
