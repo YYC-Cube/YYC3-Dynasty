@@ -1,17 +1,20 @@
 # ═══════════════════════════════════════════════════════════════
 # file: deploy.yml
-# description: GitHub Pages 自动部署工作流 · main 分支推送即发布
+# description: GitHub Pages 自动部署工作流 · 等待 CI 通过后自动部署 main
 # author: YanYuCloudCube Team
-# version: v1.0.0
+# version: v2.0.0
 # created: 2026-07-16
 # updated: 2026-07-16
 # status: active
-# tags: [deploy],[github-pages],[ci-cd]
+# tags: [deploy],[github-pages],[ci-cd],[quality-gate]
 #
-# brief: 推送到 main 时构建生产包并部署到 GitHub Pages（自定义域名 dynasty.yyc3.fun）
+# brief: CI 通过后构建生产包并部署到 GitHub Pages（自定义域名 dynasty.yyc3.fun），部署后执行健康检查
 #
 # details:
-# - 使用 pnpm + Node 20 构建生产 bundle（dist/）
+# - pipeline: push/PR → ci.yml（质量门禁）→ deploy.yml（构建+部署）→ lighthouse.yml（性能审计）
+# - 使用 pnpm + Node 22 构建生产 bundle（dist/）
+# - VITE_API_URL 通过 GitHub Actions Variables 注入（在仓库 Settings → Secrets and variables → Actions 设置）
+# - 部署后自动执行 5 次健康检查（含回退间隔，适配自定义域名 DNS 传播延迟）
 # - public/CNAME（dynasty.yyc3.fun）随构建产物自动部署，GitHub Pages 据此启用自定义域名
 # - 自定义域名 → 根路径部署，Vite base 无需改为子路径
 # - 需在 GitHub 仓库 Settings → Pages → Source 选择 "GitHub Actions"
@@ -20,7 +23,9 @@
 name: Deploy Pages
 
 on:
-  push:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
     branches: [main]
   workflow_dispatch:
 
@@ -38,9 +43,12 @@ jobs:
   build:
     name: Build production bundle
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
     steps:
       - name: 📥 Checkout
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
 
       - name: 📦 Setup pnpm
         uses: pnpm/action-setup@v6
@@ -57,6 +65,8 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: 🏗️ Build production bundle
+        env:
+          VITE_API_URL: ${{ vars.VITE_API_URL || '' }}
         run: pnpm build
 
       - name: 📄 Configure Pages
@@ -78,3 +88,25 @@ jobs:
       - name: 🚀 Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+  smoke-test:
+    name: Post-deploy smoke test
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🌐 Verify production site is reachable
+        run: |
+          SITE="https://dynasty.yyc3.fun/"
+          echo "🔍 Testing: $SITE"
+          # 最多重试 5 次，间隔 15 秒（GitHub Pages + 自定义域名 DNS 传播延迟）
+          for i in 1 2 3 4 5; do
+            HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" "$SITE" || echo "000")
+            if [ "$HTTP_CODE" = "200" ]; then
+              echo "✅ Site OK (HTTP $HTTP_CODE)"
+              exit 0
+            fi
+            echo "⏳ Attempt $i/5 — HTTP $HTTP_CODE, waiting 15s..."
+            sleep 15
+          done
+          echo "❌ Site unreachable after 5 attempts"
+          exit 1

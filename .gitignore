@@ -43,3 +43,6 @@ next-env.d.ts
 
 # 参考文档 — 不提交，仅本地使用（399MB / 19000+ 文件）
 docs/YYC3-AI-Dev/
+
+# Agent 工作记忆
+.codebuddy/

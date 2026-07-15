@@ -1,0 +1,25 @@
+{
+  "name": "YYC³ Dynasty · 三省六部",
+  "short_name": "YYC³ Dynasty",
+  "description": "AI Agent 协作管理看板 — 三省六部，君臣共治",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a12",
+  "theme_color": "#0a0a12",
+  "orientation": "portrait-primary",
+  "lang": "zh-CN",
+  "icons": [
+    {
+      "src": "/yyc3-icons/Web%20App/android-chrome-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/yyc3-icons/Web%20App/android-chrome-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -107,7 +107,7 @@ function interpolateJSX(text: string, components: Record<string, ReactNode>): Re
 
 function cloneWithChildren(element: ReactNode, children: ReactNode): ReactNode {
   if (isValidElement(element)) {
-    const props = { ...element.props, children };
+    const props = { ...(element.props as Record<string, unknown>), children };
     return { ...element, props };
   }
   return element;
