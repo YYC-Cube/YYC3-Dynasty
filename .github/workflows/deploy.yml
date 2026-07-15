@@ -1,0 +1,80 @@
+# ═══════════════════════════════════════════════════════════════
+# file: deploy.yml
+# description: GitHub Pages 自动部署工作流 · main 分支推送即发布
+# author: YanYuCloudCube Team
+# version: v1.0.0
+# created: 2026-07-16
+# updated: 2026-07-16
+# status: active
+# tags: [deploy],[github-pages],[ci-cd]
+#
+# brief: 推送到 main 时构建生产包并部署到 GitHub Pages（自定义域名 dynasty.yyc3.fun）
+#
+# details:
+# - 使用 pnpm + Node 20 构建生产 bundle（dist/）
+# - public/CNAME（dynasty.yyc3.fun）随构建产物自动部署，GitHub Pages 据此启用自定义域名
+# - 自定义域名 → 根路径部署，Vite base 无需改为子路径
+# - 需在 GitHub 仓库 Settings → Pages → Source 选择 "GitHub Actions"
+# ═══════════════════════════════════════════════════════════════
+
+name: Deploy Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 同一分支新推送取消旧的部署运行，避免并发覆盖
+concurrency:
+  group: deploy-pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build production bundle
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+
+      - name: 📦 Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: latest
+
+      - name: 🟢 Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: 📥 Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: 🏗️ Build production bundle
+        run: pnpm build
+
+      - name: 📄 Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: 📤 Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: 🚀 Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

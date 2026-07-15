@@ -1,0 +1,42 @@
+/**
+ * file: globals.css
+ * description: 全局 CSS 变量 · 组件内联样式使用的传统变量定义
+ * author: YanYuCloudCube Team
+ * version: v1.1.0
+ * created: 2026-03-21
+ * updated: 2026-07-16
+ * status: active
+ * tags: [style],[global],[variables]
+ *
+ * brief: 组件 inline style 中使用的 CSS 变量（var(--bg) / var(--acc) 等）统一定义
+ *
+ * details:
+ * - 映射 theme.css @theme token 到组件使用的短名变量
+ * - 所有 --bg / --text / --muted / --line / --panel / --acc / --danger / --ok / --warn 等
+ * - 组件内联样式 var(--xxx) 引用本文件定义
+ */
+
+:root {
+  /* ── 背景层 ── */
+  --bg: var(--color-bg-primary);
+  --bg2: var(--color-bg-card);
+  --panel: #1a1f2e;
+  --panel2: #141823;
+
+  /* ── 文本 ── */
+  --text: var(--color-text-primary);
+  --muted: var(--color-text-secondary);
+
+  /* ── 边框/分隔线 ── */
+  --line: rgba(255, 255, 255, 0.08);
+
+  /* ── 强调色 ── */
+  --acc: var(--color-accent-gold);
+  --acc2: var(--color-zhongshu);
+
+  /* ── 状态色 ── */
+  --danger: var(--color-accent-red);
+  --ok: #10b981;
+  --warn: #f59e0b;
+  --success: #10b981;
+}

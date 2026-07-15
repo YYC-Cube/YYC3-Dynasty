@@ -1,0 +1,76 @@
+/**
+ * file: theme.css
+ * description: 全局主题样式 · 三省六部暗色主题 CSS Variables
+ * author: YanYuCloudCube Team
+ * version: v1.0.0
+ * created: 2026-03-21
+ * updated: 2026-07-12
+ * status: active
+ * tags: [style],[theme],[global]
+ *
+ * brief: 全局主题变量与基础样式定义
+ *
+ * details:
+ * - 基于 TailwindCSS v4 的 @theme 指令
+ * - 定义朝代暗色主题色板（金、红、紫等）
+ * - 三省六部专属颜色映射
+ * - 基础 body 样式与字体设置
+ *
+ * dependencies: TailwindCSS v4
+ * notes: 在 index.css 中引入
+ */
+
+@import 'tailwindcss';
+
+@theme {
+  --color-bg-primary: #0a0e17;
+  --color-bg-secondary: #141823;
+  --color-bg-card: #1a1f2e;
+  --color-accent-gold: #d4a843;
+  --color-accent-red: #c2414b;
+  --color-zhongshu: #3b82f6;
+  --color-menxia: #f59e0b;
+  --color-shangshu: #10b981;
+  --color-text-primary: #e5e7eb;
+  --color-text-secondary: #9ca3af;
+  --color-text-muted: #6b7280;
+  --color-emperor: #8b5cf6;
+  --color-bronze: #b45309;
+  --color-success-dark: #065f46;
+  --color-bg-paper: #1e180e;
+  --color-text-paper: #e8d5a3;
+
+  --spacing-page: 24px;
+  --spacing-card: 16px;
+  --spacing-element: 8px;
+
+  --radius-card: 12px;
+  --radius-button: 8px;
+  --radius-avatar: 8px;
+
+  --shadow-card: 0 0 20px rgba(212, 168, 67, 0.1);
+  --shadow-panel: 0 0 60px rgba(212, 168, 67, 0.08);
+  --shadow-button-hover: 0 0 30px rgba(212, 168, 67, 0.2);
+}
+
+@layer base {
+  body {
+    background-color: var(--color-bg-primary);
+    color: var(--color-text-primary);
+    font-family:
+      ui-sans-serif,
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      'Segoe UI',
+      Roboto,
+      'Helvetica Neue',
+      Arial,
+      'Noto Sans',
+      sans-serif,
+      'Apple Color Emoji',
+      'Segoe UI Emoji',
+      'Segoe UI Symbol',
+      'Noto Color Emoji';
+  }
+}

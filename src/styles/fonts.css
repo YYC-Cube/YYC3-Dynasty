@@ -1,0 +1,45 @@
+/**
+ * file: fonts.css
+ * description: 全局字体定义 · 本地化 @fontsource 加载
+ * author: YanYuCloudCube Team
+ * version: v1.1.0
+ * created: 2026-03-21
+ * updated: 2026-07-16
+ * status: active
+ * tags: [style],[font],[global]
+ *
+ * brief: 全局字体加载（本地 @fontsource）与工具类定义
+ *
+ * details:
+ * - 通过 @fontsource 本地加载：Noto Serif SC, JetBrains Mono, Zhi Mang Xing
+ * - 不再依赖 Google Fonts CDN，消除首屏阻塞与外部依赖
+ * - 定义 font-serif-sc / font-mono-jb / font-ancient 工具类
+ * - 定义 hide-scrollbar 滚动条隐藏工具类
+ *
+ * dependencies: @fontsource-variable/noto-serif-sc, @fontsource/jetbrains-mono, @fontsource/zhi-mang-xing
+ */
+
+/* 本地字体加载（Vite 自动代码分割，按需加载 woff2） */
+@import '@fontsource-variable/noto-serif-sc';
+@import '@fontsource/jetbrains-mono/400.css';
+@import '@fontsource/jetbrains-mono/700.css';
+@import '@fontsource/zhi-mang-xing';
+
+@layer utilities {
+  .font-serif-sc {
+    font-family: 'Noto Serif SC Variable', 'Noto Serif SC', serif;
+  }
+  .font-mono-jb {
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .font-ancient {
+    font-family: 'Zhi Mang Xing', cursive;
+  }
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}

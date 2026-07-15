@@ -1,0 +1,24 @@
+/**
+ * file: tailwind.css
+ * description: TailwindCSS v4 配置 · 源码扫描与动画插件
+ * author: YanYuCloudCube Team
+ * version: v1.0.0
+ * created: 2026-03-21
+ * updated: 2026-07-12
+ * status: active
+ * tags: [style],[tailwind],[config]
+ *
+ * brief: TailwindCSS v4 入口配置
+ *
+ * details:
+ * - source(none) 禁用默认扫描，手动指定 @source 路径
+ * - 扫描 src/** 下的 js/ts/jsx/tsx 文件提取类名
+ * - 引入 tw-animate-css 动画插件
+ *
+ * dependencies: TailwindCSS v4, tw-animate-css
+ */
+
+@import 'tailwindcss' source(none);
+@source '../**/*.{js,ts,jsx,tsx}';
+
+@import 'tw-animate-css';

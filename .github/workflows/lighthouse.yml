@@ -1,0 +1,68 @@
+# ═══════════════════════════════════════════════════════════════
+# file: lighthouse.yml
+# description: Lighthouse CI 性能审计 · 构建产物自动检测性能退化
+# author: YanYuCloudCube Team
+# version: v1.0.0
+# created: 2026-07-16
+# updated: 2026-07-16
+# status: active
+# tags: [ci],[lighthouse],[performance]
+#
+# brief: 对 GitHub Pages 部署后的站点运行 Lighthouse 审计
+# ═══════════════════════════════════════════════════════════════
+
+name: Lighthouse CI
+
+on:
+  workflow_run:
+    workflows: [Deploy Pages]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  lighthouse:
+    name: Lighthouse Audit
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: 📦 Install Lighthouse CI
+        run: npm install -g @lhci/cli@0.15.x
+
+      - name: 🔦 Run Lighthouse CI
+        run: |
+          lhci collect \
+            --url=https://dynasty.yyc3.fun/ \
+            --url=https://dynasty.yyc3.fun/welcome \
+            --url=https://dynasty.yyc3.fun/dashboard \
+            --numberOfRuns=1 \
+            --settings.preset=desktop
+        continue-on-error: true
+
+      - name: 📊 Assert performance thresholds
+        run: |
+          lhci assert \
+            --assertions.performance=0.75 \
+            --assertions.accessibility=0.90 \
+            --assertions.best-practices=0.90 \
+            --assertions.seo=0.90
+        continue-on-error: true
+
+      - name: 📤 Upload Lighthouse report
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-report
+          path: .lighthouseci/
+          retention-days: 14

@@ -1,0 +1,35 @@
+# YYC³ Dynasty — 代码所有权定义
+# https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+#
+# 当 PR 涉及以下路径时，GitHub 会自动请求对应 owner 做 review。
+# 配合分支保护规则中的 "Require review from Code Owners"，
+# 确保核心代码的变更必须经过维护者审批。
+
+# ── 全局默认 ──────────────────────────────────────────
+# 未匹配其他规则的文件，默认由维护者 review
+*                       @YYC-Cube/core
+
+# ── 核心源码 ──────────────────────────────────────────
+/src/app/store.ts       @YYC-Cube/core
+/src/app/api.ts         @YYC-Cube/core
+/src/app/routes.tsx     @YYC-Cube/core
+/src/lib/i18n-core/     @YYC-Cube/core
+/src/lib/i18n-react/    @YYC-Cube/core
+
+# ── Agent 人格体系 ───────────────────────────────────
+/agents/                @YYC-Cube/core
+
+# ── 构建与部署 ────────────────────────────────────────
+/vite.config.ts         @YYC-Cube/core
+/tsconfig.json          @YYC-Cube/core
+/Dockerfile             @YYC-Cube/core
+/nginx.conf             @YYC-Cube/core
+/package.json           @YYC-Cube/core
+
+# ── CI/CD 与仓库配置 ─────────────────────────────────
+/.github/               @YYC-Cube/core
+
+# ── 以下路径欢迎社区贡献者自主 review ────────────────
+# /docs/                可由任何 Committer review
+# /examples/            可由任何 Committer review
+# README*.md            可由任何 Committer review

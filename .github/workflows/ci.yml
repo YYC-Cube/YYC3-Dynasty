@@ -1,0 +1,89 @@
+# ═══════════════════════════════════════════════════════════════
+# file: ci.yml
+# description: 持续集成工作流 · PR/Push 全量检查 + 安全审计
+# author: YanYuCloudCube Team
+# version: v1.1.0
+# created: 2026-07-12
+# updated: 2026-07-16
+# status: active
+# tags: [ci],[github-actions],[quality],[security]
+#
+# brief: PR 和 main 分支推送时运行 typecheck/lint/test/audit/build
+# ═══════════════════════════════════════════════════════════════
+
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+# 同一分支的新推送取消旧的运行
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    name: TypeCheck + Lint + Test + Build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18, 20]
+
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+
+      - name: 📦 Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: latest
+
+      - name: 🟢 Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+
+      - name: 📥 Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: 🛡️ Security audit (high severity gate)
+        run: pnpm audit --audit-level=high
+        continue-on-error: true
+
+      - name: 🔍 TypeScript check
+        run: pnpm typecheck
+
+      - name: 🧹 ESLint
+        run: pnpm lint
+
+      - name: 💅 Prettier check
+        run: pnpm format:check
+
+      - name: 🧪 Vitest with coverage
+        run: pnpm test:coverage
+
+      - name: 📊 Upload coverage report
+        if: matrix.node-version == 20
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-${{ github.sha }}
+          path: coverage/
+          retention-days: 14
+
+      - name: 🔄 Circular dependency check
+        run: pnpm check:circular
+
+      - name: 🏗️ Build
+        run: pnpm build
+
+      - name: 📤 Upload build artifacts
+        if: matrix.node-version == 20
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-${{ github.sha }}
+          path: dist/
+          retention-days: 7

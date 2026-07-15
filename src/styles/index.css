@@ -1,0 +1,23 @@
+/**
+ * file: index.css
+ * description: 全局样式入口 · 聚合加载各层样式文件
+ * author: YanYuCloudCube Team
+ * version: v1.0.0
+ * created: 2026-03-21
+ * updated: 2026-07-12
+ * status: active
+ * tags: [style],[entry],[global]
+ *
+ * brief: 全局样式聚合入口
+ *
+ * details:
+ * - 按顺序加载：fonts → tailwind → theme
+ * - 在 main.tsx 或应用入口中引入
+ *
+ * dependencies: fonts.css, tailwind.css, theme.css
+ */
+
+@import './fonts.css';
+@import './tailwind.css';
+@import './theme.css';
+@import './globals.css';
