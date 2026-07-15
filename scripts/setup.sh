@@ -41,29 +41,29 @@ info()  { echo -e "${BLUE}ℹ️  $1${NC}"; }
 check_deps() {
   info "检查依赖..."
 
-  # Node.js >= 18
+  # Node.js >= 20
   if ! command -v node &>/dev/null; then
-    error "未找到 Node.js。请安装 Node.js >= 18: https://nodejs.org"
+    error "未找到 Node.js。请安装 Node.js >= 20: https://nodejs.org"
     exit 1
   fi
   NODE_VERSION=$(node -v | sed 's/v//')
   NODE_MAJOR=$(echo "$NODE_VERSION" | cut -d. -f1)
-  if [ "$NODE_MAJOR" -lt 18 ]; then
-    error "Node.js 版本过低 ($NODE_VERSION)，需要 >= 18"
+  if [ "$NODE_MAJOR" -lt 20 ]; then
+    error "Node.js 版本过低 ($NODE_VERSION)，需要 >= 20"
     exit 1
   fi
   log "Node.js: $NODE_VERSION"
 
-  # pnpm >= 8
+  # pnpm >= 10
   if ! command -v pnpm &>/dev/null; then
     warn "未找到 pnpm，正在自动安装..."
-    npm install -g pnpm
+    npm install -g pnpm@10
     log "pnpm 已安装"
   else
     PNPM_VERSION=$(pnpm --version)
     PNPM_MAJOR=$(echo "$PNPM_VERSION" | cut -d. -f1)
-    if [ "$PNPM_MAJOR" -lt 8 ]; then
-      warn "pnpm 版本过低 ($PNPM_VERSION)，建议升级到 >= 8"
+    if [ "$PNPM_MAJOR" -lt 10 ]; then
+      warn "pnpm 版本过低 ($PNPM_VERSION)，建议升级到 >= 10"
     fi
     log "pnpm: $PNPM_VERSION"
   fi

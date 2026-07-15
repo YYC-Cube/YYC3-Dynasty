@@ -27,10 +27,10 @@
 # ═══════════════════════════════════════════════════════════════
 
 # ── Stage 1: Builder ──
-FROM node:20-alpine AS builder
+FROM node:22-alpine AS builder
 
-# pnpm 通过 corepack 启用
-RUN corepack enable && corepack prepare pnpm@latest --activate
+# pnpm 通过 corepack 启用（固定版本避免兼容性问题）
+RUN corepack enable && corepack prepare pnpm@10 --activate
 
 WORKDIR /app
 

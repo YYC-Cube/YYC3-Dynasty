@@ -12,7 +12,7 @@ _言启象限 | 语枢未来_
 ![React](https://img.shields.io/badge/React-18.3-61dafb?logo=react&logoColor=black)
 ![Vite](https://img.shields.io/badge/Vite-6.3-646cff?logo=vite&logoColor=white)
 ![TailwindCSS](https://img.shields.io/badge/Tailwind-v4-38bdf8?logo=tailwindcss&logoColor=white)
-![Tests](https://img.shields.io/badge/tests-108%20passed-22c55e)
+![Tests](https://img.shields.io/badge/tests-320%20passed-22c55e)
 ![License](https://img.shields.io/badge/license-MIT-d4a843)
 
 </div>
@@ -35,13 +35,13 @@ _言启象限 | 语枢未来_
 ## 🚀 快速开始
 
 ```bash
-# 前置要求: Node.js >= 18, pnpm >= 8
+# 前置要求: Node.js >= 20, pnpm >= 10
 pnpm install          # 安装依赖
 pnpm dev              # 启动开发服务器 → http://localhost:3122
 pnpm build            # 构建生产版本 → dist/
 pnpm typecheck        # TypeScript 类型检查（0 errors）
 pnpm lint             # ESLint 代码规范检查
-pnpm test             # 运行 Vitest 测试套件（108 用例）
+pnpm test             # 运行 Vitest 测试套件（320 用例）
 ```
 
 <details>

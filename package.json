@@ -5,8 +5,8 @@
   "type": "module",
   "description": "YYC³ Dynasty · 三省六部 — AI Agent 协作管理看板",
   "engines": {
-    "node": ">=18",
-    "pnpm": ">=8"
+    "node": ">=20",
+    "pnpm": ">=10"
   },
   "scripts": {
     "dev": "vite",

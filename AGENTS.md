@@ -37,13 +37,13 @@ pnpm lint:fix         # ESLint auto-fix
 pnpm format           # Prettier format all source/config files
 pnpm format:check     # Prettier check (CI gate)
 pnpm check:circular   # madge — detect circular dependencies
-pnpm check:dead       # unimported — detect dead code / unused dependencies
+pnpm check:dead       # knip — detect dead code / unused dependencies
 pnpm check:all        # typecheck + lint + test + build (full CI gate)
 ```
 
 Environment:
 
-- **Node.js >= 18, pnpm >= 8** (declared in `package.json` `engines`, enforced norm from `docs/CONTRIBUTING.md`).
+- **Node.js >= 20, pnpm >= 10** (declared in `package.json` `engines`). CI runs Node 20 + 22 matrix.
 - `pnpm-workspace.yaml` sets `supportedArchitectures` to **linux + darwin** (x64 + arm64) so native binaries (e.g. `@rollup/rollup-*`) resolve on both macOS dev hosts and Linux Docker images. `minimumReleaseAge: 10080` (7-day cooldown on new package releases). `allowBuilds` whitelists `@tailwindcss/oxide` and `esbuild`.
 - API base URL is configurable via the `VITE_API_URL` env var (defaults to same-origin / empty → mock fallback).
 
@@ -54,15 +54,15 @@ Environment:
 | `pnpm typecheck`      | ✅ 0 errors (TypeScript 5.9.x, strict)         |
 | `pnpm lint`           | ✅ 0 errors, 0 warnings (ESLint 9 flat config) |
 | `pnpm format:check`   | ✅ All files conform to Prettier style         |
-| `pnpm test`           | ✅ 108 tests pass (Vitest 3.x)                 |
-| `pnpm test:coverage`  | ✅ 83.82% statements, 80.21% branches          |
+| `pnpm test`           | ✅ 320 tests pass (Vitest 3.x)                 |
+| `pnpm test:coverage`  | ✅ 92.93% statements, 84.38% branches          |
 | `pnpm check:circular` | ✅ No circular dependencies                    |
-| `pnpm check:dead`     | ✅ 0 unimported files                          |
-| `pnpm build`          | ✅ 2661 modules, initial ~418 kB (gzip 137 kB) |
+| `pnpm check:dead`     | ✅ knip clean (0 unused)                       |
+| `pnpm build`          | ✅ ~3000 modules, initial ~294 kB gzip         |
 
 ### What is NOT configured
 
-All core quality tools are configured and passing: ESLint, Prettier, Vitest, madge, unimported, Docker, GitHub Actions CI. Use `pnpm check:all` as the full pre-commit gate (`typecheck && lint && test && build`). See §11 for deployment.
+All core quality tools are configured and passing: ESLint, Prettier, Vitest, madge, knip, Docker, GitHub Actions CI (6 workflows), Lighthouse CI. Use `pnpm check:all` as the full pre-commit gate (`typecheck && lint && test && build`). See §11 for deployment.
 
 ---
 

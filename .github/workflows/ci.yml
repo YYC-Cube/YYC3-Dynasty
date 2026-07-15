@@ -2,7 +2,7 @@
 # file: ci.yml
 # description: 持续集成工作流 · PR/Push 全量检查 + 安全审计
 # author: YanYuCloudCube Team
-# version: v1.1.0
+# version: v1.2.0
 # created: 2026-07-12
 # updated: 2026-07-16
 # status: active
@@ -30,7 +30,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [18, 20]
+        node-version: [20, 22]
 
     steps:
       - name: 📥 Checkout
@@ -39,7 +39,7 @@ jobs:
       - name: 📦 Setup pnpm
         uses: pnpm/action-setup@v6
         with:
-          version: latest
+          version: 10
 
       - name: 🟢 Setup Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
@@ -67,7 +67,7 @@ jobs:
         run: pnpm test:coverage
 
       - name: 📊 Upload coverage report
-        if: matrix.node-version == 20
+        if: matrix.node-version == 22
         uses: actions/upload-artifact@v4
         with:
           name: coverage-${{ github.sha }}
@@ -81,7 +81,7 @@ jobs:
         run: pnpm build
 
       - name: 📤 Upload build artifacts
-        if: matrix.node-version == 20
+        if: matrix.node-version == 22
         uses: actions/upload-artifact@v4
         with:
           name: dist-${{ github.sha }}

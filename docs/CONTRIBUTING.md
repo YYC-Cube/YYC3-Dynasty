@@ -23,8 +23,8 @@ complexity: basic
 
 ### 前置要求
 
-- Node.js >= 18
-- pnpm >= 8
+- Node.js >= 20
+- pnpm >= 10
 
 ### 快速开始
 
