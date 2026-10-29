@@ -2,18 +2,20 @@ import { Link, useLocation } from 'react-router';
 import { Suspense, lazy } from 'react';
 import { Bell, User } from 'lucide-react';
 import { motion } from 'motion/react';
+import { useTranslation } from '@/lib/i18n-react';
 
 const LanguageSwitcher = lazy(() => import('./LanguageSwitcher'));
 
 export function DynastyNavbar() {
   const location = useLocation();
+  const { t } = useTranslation();
 
   const navItems = [
-    { path: '/dashboard', label: '看板', icon: '🏛️' },
-    { path: '/court', label: '朝堂', icon: '🏯' },
-    { path: '/timeline', label: '王朝', icon: '📜' },
-    { path: '/edict', label: '旨意', icon: '📋' },
-    { path: '/bridge', label: '双星桥', icon: '🌉' },
+    { path: '/dashboard', label: t('nav.dashboard'), icon: '🏛️' },
+    { path: '/court', label: t('nav.court'), icon: '🏯' },
+    { path: '/timeline', label: t('nav.timeline'), icon: '📜' },
+    { path: '/edict', label: t('nav.edict'), icon: '📋' },
+    { path: '/bridge', label: t('nav.bridge'), icon: '🌉' },
   ];
 
   return (

@@ -63,7 +63,30 @@ function nest(flat: Record<string, string>): TranslationMap {
   return result;
 }
 
+const sharedNav: Record<string, string> = {
+  'nav.dashboard': '看板',
+  'nav.court': '朝堂',
+  'nav.timeline': '王朝',
+  'nav.edict': '旨意',
+  'nav.bridge': '双星桥',
+  'bridge.title': '双星桥',
+  'bridge.subtitle': 'Dual Star Bridge',
+  'bridge.desc': 'AI Family × Dynasty Court · 鹊桥映射 · 双架构联治全景',
+  'bridge.aiFamily': 'AI Family',
+  'bridge.aiFamilyDesc': '8家人·时钟环',
+  'bridge.dynastyCourt': 'Dynasty Court',
+  'bridge.dynastyCourtDesc': '12朝臣·层级排列',
+  'bridge.edicts': '旨意',
+  'bridge.tasks': '任务',
+  'bridge.collaboration': '协作',
+  'bridge.unifiedTitle': '近期联合旨意',
+  'bridge.unifiedSubtitle': 'Family × Dynasty 协同任务',
+  'bridge.hoverHint': '悬停家人·查看桥接映射',
+  'bridge.legendTitle': '桥接对应',
+};
+
 const zhCNFlat: Record<string, string> = {
+  ...sharedNav,
   'dynasty.title': '三省六部 · 总控台',
   'dynasty.subtitle': 'OpenClaw Sansheng-Liubu Dashboard',
   'sync.ok': '同步正常',
@@ -105,7 +128,30 @@ const zhCNFlat: Record<string, string> = {
   'time.daysAgo': '{n}天前',
 };
 
+const sharedNavEn: Record<string, string> = {
+  'nav.dashboard': 'Dashboard',
+  'nav.court': 'Court',
+  'nav.timeline': 'Dynasty',
+  'nav.edict': 'Edicts',
+  'nav.bridge': 'Bridge',
+  'bridge.title': 'Dual Star Bridge',
+  'bridge.subtitle': 'Dual Star Bridge',
+  'bridge.desc': 'AI Family × Dynasty Court · Magpie Bridge · Dual-Architecture Governance',
+  'bridge.aiFamily': 'AI Family',
+  'bridge.aiFamilyDesc': '8 Members · Clock Ring',
+  'bridge.dynastyCourt': 'Dynasty Court',
+  'bridge.dynastyCourtDesc': '12 Officials · Tier Layout',
+  'bridge.edicts': 'Edicts',
+  'bridge.tasks': 'Tasks',
+  'bridge.collaboration': 'Collab',
+  'bridge.unifiedTitle': 'Recent Joint Edicts',
+  'bridge.unifiedSubtitle': 'Family × Dynasty Collaboration',
+  'bridge.hoverHint': 'Hover a member to see bridge mapping',
+  'bridge.legendTitle': 'Bridge Mapping',
+};
+
 const enFlat: Record<string, string> = {
+  ...sharedNavEn,
   'dynasty.title': 'Sansheng-Liubu · Dashboard',
   'dynasty.subtitle': 'OpenClaw Control Center',
   'sync.ok': 'Sync OK',
@@ -149,6 +195,7 @@ const enFlat: Record<string, string> = {
 
 // ── 繁體中文 (zh-TW) ──
 const zhTWFlat: Record<string, string> = {
+  ...sharedNav,
   'dynasty.title': '三省六部 · 總控台',
   'dynasty.subtitle': 'OpenClaw Sansheng-Liubu Dashboard',
   'sync.ok': '同步正常',
@@ -192,6 +239,7 @@ const zhTWFlat: Record<string, string> = {
 
 // ── 日本語 (ja) ──
 const jaFlat: Record<string, string> = {
+  ...sharedNavEn,
   'dynasty.title': '三省六部 · ダッシュボード',
   'dynasty.subtitle': 'OpenClaw コントロールセンター',
   'sync.ok': '同期OK',
@@ -235,6 +283,7 @@ const jaFlat: Record<string, string> = {
 
 // ── 한국어 (ko) ──
 const koFlat: Record<string, string> = {
+  ...sharedNavEn,
   'dynasty.title': '삼성육부 · 대시보드',
   'dynasty.subtitle': 'OpenClaw 컨트롤 센터',
   'sync.ok': '동기화 정상',
@@ -278,6 +327,7 @@ const koFlat: Record<string, string> = {
 
 // ── Français (fr) ──
 const frFlat: Record<string, string> = {
+  ...sharedNavEn,
   'dynasty.title': 'Sansheng-Liubu · Tableau de bord',
   'dynasty.subtitle': 'Centre de contrôle OpenClaw',
   'sync.ok': 'Synchro OK',
@@ -321,6 +371,7 @@ const frFlat: Record<string, string> = {
 
 // ── Deutsch (de) ──
 const deFlat: Record<string, string> = {
+  ...sharedNavEn,
   'dynasty.title': 'Sansheng-Liubu · Dashboard',
   'dynasty.subtitle': 'OpenClaw Kontrollzentrum',
   'sync.ok': 'Sync OK',
@@ -364,6 +415,7 @@ const deFlat: Record<string, string> = {
 
 // ── Español (es) ──
 const esFlat: Record<string, string> = {
+  ...sharedNavEn,
   'dynasty.title': 'Sansheng-Liubu · Panel',
   'dynasty.subtitle': 'Centro de control OpenClaw',
   'sync.ok': 'Sincronización OK',
@@ -407,6 +459,7 @@ const esFlat: Record<string, string> = {
 
 // ── Português (pt-BR) ──
 const ptBRFlat: Record<string, string> = {
+  ...sharedNavEn,
   'dynasty.title': 'Sansheng-Liubu · Painel',
   'dynasty.subtitle': 'Centro de controle OpenClaw',
   'sync.ok': 'Sincronização OK',
@@ -450,6 +503,7 @@ const ptBRFlat: Record<string, string> = {
 
 // ── العربية (ar, RTL) ──
 const arFlat: Record<string, string> = {
+  ...sharedNavEn,
   'dynasty.title': 'سانشينغ ليوبو · لوحة التحكم',
   'dynasty.subtitle': 'مركز تحكم OpenClaw',
   'sync.ok': 'المزامنة جيدة',

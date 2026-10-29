@@ -1,57 +1,18 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { Sparkles } from 'lucide-react';
+import { useTranslation } from '@/lib/i18n-react';
 
+/** AI Family 8 位家人，按参考数据规范排序（12 点钟方向顺时针） */
 const FAMILY_MEMBERS = [
-  {
-    id: 'qianli',
-    icon: '⭐',
-    name: '千里·伯乐',
-    role: '推荐·知识检索',
-    color: '#C9A84C',
-    angle: 90,
-  },
-  {
-    id: 'zhiyun',
-    icon: '🛡️',
-    name: '智云·守护',
-    role: '安全·基础设施',
-    color: '#7B9EA8',
-    angle: 30,
-  },
-  {
-    id: 'yujian',
-    icon: '🔮',
-    name: '预见·先知',
-    role: '预测·Physical AI',
-    color: '#9B7BC4',
-    angle: 330,
-  },
-  {
-    id: 'yuanqi',
-    icon: '⚙️',
-    name: '元启·天枢',
-    role: '决策·Agentic AI',
-    color: '#E8734A',
-    angle: 270,
-  },
-  { id: 'yushu', icon: '🧠', name: '语枢·万物', role: '记忆·训练AI', color: '#5B9B8A', angle: 210 },
-  {
-    id: 'yanqi',
-    icon: '👂',
-    name: '言启·千行',
-    role: '感知·NLU路由',
-    color: '#A8915A',
-    angle: 150,
-  },
-  {
-    id: 'chuangxiang',
-    icon: '🎨',
-    name: '创想·灵韵',
-    role: '创作·视觉',
-    color: '#C47BA8',
-    angle: 315,
-  },
-  { id: 'gewu', icon: '⚖️', name: '格物·宗师', role: '推理·验证', color: '#6A9BC4', angle: 225 },
+  { id: 'yanqi',       icon: '👂', name: '言启·千行', role: '感知·NLU路由',       color: '#A8915A' },
+  { id: 'yushu',       icon: '🧠', name: '语枢·万物', role: '记忆·训练AI',        color: '#5B9B8A' },
+  { id: 'yujian',      icon: '🔮', name: '预见·先知', role: '预测·Physical AI',  color: '#9B7BC4' },
+  { id: 'qianli',      icon: '⭐', name: '千里·伯乐', role: '推荐·知识检索',      color: '#C9A84C' },
+  { id: 'yuanqi',      icon: '⚙️', name: '元启·天枢', role: '决策·Agentic AI',   color: '#E8734A' },
+  { id: 'zhiyun',      icon: '🛡️', name: '智云·守护', role: '安全·基础设施',     color: '#7B9EA8' },
+  { id: 'gewu',        icon: '⚖️', name: '格物·宗师', role: '推理·验证',         color: '#6A9BC4' },
+  { id: 'chuangxiang', icon: '🎨', name: '创想·灵韵', role: '创作·视觉',         color: '#C47BA8' },
 ];
 
 const DYNASTY_OFFICIALS = [
@@ -129,69 +90,6 @@ const UNIFIED_TASKS = [
   },
 ];
 
-function FamilyMemberBadge({
-  member,
-  isActive,
-  isHighlighted,
-  onHover,
-  onLeave,
-  cx,
-  cy,
-}: {
-  member: (typeof FAMILY_MEMBERS)[0];
-  isActive: boolean;
-  isHighlighted: boolean;
-  onHover: () => void;
-  onLeave: () => void;
-  cx: number;
-  cy: number;
-}) {
-  return (
-    <motion.g
-      onMouseEnter={onHover}
-      onMouseLeave={onLeave}
-      style={{ cursor: 'pointer' }}
-      animate={{ scale: isActive ? 1.25 : isHighlighted ? 1.05 : 1 }}
-      transition={{ duration: 0.2 }}
-    >
-      {isActive && (
-        <motion.circle
-          cx={cx}
-          cy={cy}
-          r={36}
-          fill="none"
-          stroke={member.color}
-          strokeWidth={2}
-          initial={{ opacity: 0, r: 30 }}
-          animate={{ opacity: [0.8, 0.3, 0.8], r: 36 }}
-          transition={{ duration: 1.5, repeat: Infinity }}
-        />
-      )}
-      <circle
-        cx={cx}
-        cy={cy}
-        r={28}
-        fill="#0f1520"
-        stroke={isActive ? member.color : '#C9A84C33'}
-        strokeWidth={isActive ? 2 : 1}
-      />
-      <text x={cx} y={cy + 2} textAnchor="middle" dominantBaseline="middle" fontSize={20}>
-        {member.icon}
-      </text>
-      <text
-        x={cx}
-        y={cy + 18}
-        textAnchor="middle"
-        fill={isActive ? member.color : '#C9A84C99'}
-        fontSize={9}
-        fontFamily="serif"
-      >
-        {member.name.split('·')[0]}
-      </text>
-    </motion.g>
-  );
-}
-
 function DynastyCard({
   official,
   isHighlighted,
@@ -222,14 +120,17 @@ function DynastyCard({
   );
 }
 
+/** 时钟环常量 */
+const CLOCK_CX = 180;
+const CLOCK_CY = 180;
+const CLOCK_R = 130;
+const ANGLE_STEP = (2 * Math.PI) / FAMILY_MEMBERS.length;
+
 export function DualStarBridge() {
+  const { t } = useTranslation();
   const [hoveredFamily, setHoveredFamily] = useState<string | null>(null);
 
   const activeDynasty = hoveredFamily ? (MAPPINGS[hoveredFamily] ?? []) : [];
-
-  const CX = 200;
-  const CY = 200;
-  const R = 145;
 
   return (
     <div className="min-h-screen bg-bg-primary pb-12">
@@ -240,19 +141,17 @@ export function DualStarBridge() {
             <div className="flex items-center gap-3 mb-1">
               <span className="text-2xl">🌉</span>
               <h1 className="font-serif-sc text-2xl font-bold text-accent-gold tracking-widest">
-                双星桥
+                {t('bridge.title')}
               </h1>
-              <span className="text-text-muted font-serif-sc text-sm">Dual Star Bridge</span>
+              <span className="text-text-muted font-serif-sc text-sm">{t('bridge.subtitle')}</span>
             </div>
-            <p className="text-text-muted text-sm">
-              AI Family × Dynasty Court · 鹊桥映射 · 双架构联治全景
-            </p>
+            <p className="text-text-muted text-sm">{t('bridge.desc')}</p>
           </div>
           <div className="flex gap-6">
             {[
-              ['🏯', '旨意', '128'],
-              ['🌹', '任务', '356'],
-              ['🤝', '协作', '89'],
+              ['🏯', t('bridge.edicts'), '128'],
+              ['🌹', t('bridge.tasks'), '356'],
+              ['🤝', t('bridge.collaboration'), '89'],
             ].map(([icon, label, val]) => (
               <div key={label} className="text-center">
                 <div className="text-lg">{icon}</div>
@@ -267,112 +166,92 @@ export function DualStarBridge() {
       {/* Main Bridge Layout */}
       <div className="max-w-7xl mx-auto px-8 pt-8">
         <div className="grid grid-cols-[1fr_120px_1fr] gap-0 items-start">
-          {/* LEFT: AI Family Constellation */}
+          {/* LEFT: AI Family Clock Ring */}
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <span className="text-accent-gold font-serif-sc font-bold text-sm">⭐ AI Family</span>
-              <span className="text-text-muted text-xs">8家人·圆环星座</span>
+              <span className="text-accent-gold font-serif-sc font-bold text-sm">⭐ {t('bridge.aiFamily')}</span>
+              <span className="text-text-muted text-xs">{t('bridge.aiFamilyDesc')}</span>
             </div>
             <div className="flex justify-center">
-              <svg width={400} height={400} viewBox="0 0 400 400">
-                {/* Milky way background arc */}
-                <defs>
-                  <radialGradient id="milky" cx="50%" cy="50%" r="50%">
-                    <stop offset="0%" stopColor="#C9A84C" stopOpacity="0.05" />
-                    <stop offset="100%" stopColor="#C9A84C" stopOpacity="0" />
-                  </radialGradient>
-                  <filter id="glow">
-                    <feGaussianBlur stdDeviation="3" result="coloredBlur" />
-                    <feMerge>
-                      <feMergeNode in="coloredBlur" />
-                      <feMergeNode in="SourceGraphic" />
-                    </feMerge>
-                  </filter>
-                </defs>
-                <circle
-                  cx={CX}
-                  cy={CY}
-                  r={R}
-                  fill="url(#milky)"
-                  stroke="#C9A84C22"
-                  strokeWidth={1}
-                  strokeDasharray="4 6"
-                />
+              <div className="relative" style={{ width: 360, height: 360 }}>
+                {/* SVG lines + ring */}
+                <svg className="absolute inset-0 w-full h-full" viewBox="0 0 360 360">
+                  {/* 外圈 */}
+                  <circle cx={CLOCK_CX} cy={CLOCK_CY} r={CLOCK_R}
+                    fill="none" stroke="rgba(201,168,76,0.08)" strokeWidth={1} />
+                  {/* 径向连接线 */}
+                  {FAMILY_MEMBERS.map((m, i) => {
+                    const angle = ANGLE_STEP * i - Math.PI / 2;
+                    const x = CLOCK_CX + CLOCK_R * Math.cos(angle);
+                    const y = CLOCK_CY + CLOCK_R * Math.sin(angle);
+                    const isHovered = hoveredFamily === m.id;
+                    return (
+                      <line key={m.id} x1={CLOCK_CX} y1={CLOCK_CY} x2={x} y2={y}
+                        stroke={isHovered ? m.color : "rgba(201,168,76,0.06)"}
+                        strokeWidth={isHovered ? 2 : 1}
+                        className="transition-all duration-300" />
+                    );
+                  })}
+                  {/* 桥接线（悬停时向右延伸） */}
+                  {FAMILY_MEMBERS.map((m, i) => {
+                    const angle = ANGLE_STEP * i - Math.PI / 2;
+                    const mx = CLOCK_CX + CLOCK_R * Math.cos(angle);
+                    const my = CLOCK_CY + CLOCK_R * Math.sin(angle);
+                    const isHovered = hoveredFamily === m.id;
+                    return isHovered ? (
+                      <motion.line
+                        key={m.id + '_thread'}
+                        x1={mx} y1={my}
+                        x2={360} y2={CLOCK_CY}
+                        stroke={m.color}
+                        strokeWidth={1.5}
+                        strokeDasharray="6 3"
+                        initial={{ opacity: 0, pathLength: 0 }}
+                        animate={{ opacity: 0.7, pathLength: 1 }}
+                        transition={{ duration: 0.4 }}
+                      />
+                    ) : null;
+                  })}
+                </svg>
 
-                {/* Threads to bridge for hovered member */}
-                {FAMILY_MEMBERS.map((m) => {
-                  const rad = (m.angle * Math.PI) / 180;
-                  const mx = CX + R * Math.cos(rad);
-                  const my = CY - R * Math.sin(rad);
-                  const isActive = hoveredFamily === m.id;
-                  return isActive ? (
-                    <motion.line
-                      key={m.id + '_thread'}
-                      x1={mx}
-                      y1={my}
-                      x2={400}
-                      y2={CY}
-                      stroke={m.color}
-                      strokeWidth={1.5}
-                      strokeDasharray="6 3"
-                      initial={{ opacity: 0, pathLength: 0 }}
-                      animate={{ opacity: 0.7, pathLength: 1 }}
-                      transition={{ duration: 0.4 }}
-                      filter="url(#glow)"
-                    />
-                  ) : null;
-                })}
+                {/* 中心徽章 */}
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
+                  w-20 h-20 rounded-full bg-gradient-to-br from-[#C9A84C] to-[#8B7332]
+                  flex items-center justify-center shadow-[0_0_40px_rgba(201,168,76,0.2)] z-10">
+                  <Sparkles className="w-8 h-8 text-white" />
+                </div>
 
-                {/* Center seal */}
-                <circle
-                  cx={CX}
-                  cy={CY}
-                  r={32}
-                  fill="#0f1520"
-                  stroke="#C9A84C55"
-                  strokeWidth={1.5}
-                />
-                <text
-                  x={CX}
-                  y={CY + 2}
-                  textAnchor="middle"
-                  dominantBaseline="middle"
-                  fill="#C9A84C"
-                  fontSize={22}
-                  fontFamily="serif"
-                >
-                  玺
-                </text>
-                <text
-                  x={CX}
-                  y={CY + 16}
-                  textAnchor="middle"
-                  fill="#C9A84C66"
-                  fontSize={8}
-                  fontFamily="serif"
-                >
-                  YYC³
-                </text>
+                {/* 8 位家人（绝对定位按钮） */}
+                {FAMILY_MEMBERS.map((m, i) => {
+                  const angle = ANGLE_STEP * i - Math.PI / 2;
+                  const x = CLOCK_CX + CLOCK_R * Math.cos(angle) - 24;
+                  const y = CLOCK_CY + CLOCK_R * Math.sin(angle) - 24;
+                  const isHovered = hoveredFamily === m.id;
 
-                {/* Family members */}
-                {FAMILY_MEMBERS.map((m) => {
-                  const rad = (m.angle * Math.PI) / 180;
-                  const mx = CX + R * Math.cos(rad);
-                  const my = CY - R * Math.sin(rad);
                   return (
-                    <FamilyMemberBadge
-                      key={m.id}
-                      member={m}
-                      isActive={hoveredFamily === m.id}
-                      isHighlighted={hoveredFamily !== null && hoveredFamily !== m.id}
-                      onHover={() => setHoveredFamily(m.id)}
-                      onLeave={() => setHoveredFamily(null)}
-                      cx={mx}
-                      cy={my}
-                    />
+                    <button key={m.id}
+                      onMouseEnter={() => setHoveredFamily(m.id)}
+                      onMouseLeave={() => setHoveredFamily(null)}
+                      className="absolute z-20 transition-all duration-300 hover:scale-110"
+                      style={{ left: x, top: y, width: 48, height: 48 }}>
+                      <div className="w-full h-full rounded-xl flex items-center justify-center transition-all"
+                        style={{
+                          background: isHovered ? `${m.color}30` : `${m.color}15`,
+                          border: `2px solid ${isHovered ? m.color : `${m.color}30`}`,
+                          boxShadow: isHovered ? `0 0 20px ${m.color}44` : 'none',
+                        }}>
+                        <span style={{ fontSize: 22 }}>{m.icon}</span>
+                      </div>
+                      {/* 名字标签 */}
+                      <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap">
+                        <span className="text-accent-gold/40" style={{ fontSize: '0.6rem' }}>
+                          {m.name.split('·')[0]}
+                        </span>
+                      </div>
+                    </button>
                   );
                 })}
-              </svg>
+              </div>
             </div>
 
             {/* Hover hint */}
@@ -396,7 +275,7 @@ export function DualStarBridge() {
                     animate={{ opacity: 1 }}
                     className="text-text-muted text-xs"
                   >
-                    悬停家人·查看桥接映射
+                    {t('bridge.hoverHint')}
                   </motion.p>
                 )}
               </AnimatePresence>
@@ -406,9 +285,7 @@ export function DualStarBridge() {
           {/* CENTER: Bridge Channel */}
           <div className="flex flex-col items-center justify-start pt-16">
             <div className="w-px flex-1 min-h-[320px] relative">
-              {/* Bridge pillar */}
               <div className="absolute inset-0 w-px bg-gradient-to-b from-transparent via-accent-gold/50 to-transparent mx-auto" />
-              {/* Bridge ornaments */}
               {[0, 25, 50, 75, 100].map((pct) => (
                 <motion.div
                   key={pct}
@@ -424,7 +301,7 @@ export function DualStarBridge() {
                 />
               ))}
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[10px] font-serif-sc text-accent-gold/50 rotate-90 whitespace-nowrap">
-                鹊桥映射
+                {t('bridge.legendTitle')}
               </div>
             </div>
           </div>
@@ -432,44 +309,28 @@ export function DualStarBridge() {
           {/* RIGHT: Dynasty Hierarchy */}
           <div>
             <div className="flex items-center gap-2 mb-4 justify-end">
-              <span className="text-text-muted text-xs">12朝臣·层级排列</span>
+              <span className="text-text-muted text-xs">{t('bridge.dynastyCourtDesc')}</span>
               <span className="text-accent-gold font-serif-sc font-bold text-sm">
-                🏛️ Dynasty Court
+                🏛️ {t('bridge.dynastyCourt')}
               </span>
             </div>
             <div className="space-y-2">
-              {/* Apex */}
               {DYNASTY_OFFICIALS.filter((o) => o.tier === 'apex').map((o) => (
                 <DynastyCard key={o.id} official={o} isHighlighted={activeDynasty.includes(o.id)} />
               ))}
-              {/* Heir */}
               <div className="pl-4">
                 {DYNASTY_OFFICIALS.filter((o) => o.tier === 'heir').map((o) => (
-                  <DynastyCard
-                    key={o.id}
-                    official={o}
-                    isHighlighted={activeDynasty.includes(o.id)}
-                  />
+                  <DynastyCard key={o.id} official={o} isHighlighted={activeDynasty.includes(o.id)} />
                 ))}
               </div>
-              {/* Secretariat row */}
               <div className="pl-8 grid grid-cols-3 gap-2">
                 {DYNASTY_OFFICIALS.filter((o) => o.tier === 'secretariat').map((o) => (
-                  <DynastyCard
-                    key={o.id}
-                    official={o}
-                    isHighlighted={activeDynasty.includes(o.id)}
-                  />
+                  <DynastyCard key={o.id} official={o} isHighlighted={activeDynasty.includes(o.id)} />
                 ))}
               </div>
-              {/* Ministries */}
               <div className="pl-8 grid grid-cols-3 gap-2">
                 {DYNASTY_OFFICIALS.filter((o) => o.tier === 'ministry').map((o) => (
-                  <DynastyCard
-                    key={o.id}
-                    official={o}
-                    isHighlighted={activeDynasty.includes(o.id)}
-                  />
+                  <DynastyCard key={o.id} official={o} isHighlighted={activeDynasty.includes(o.id)} />
                 ))}
               </div>
             </div>
@@ -481,14 +342,11 @@ export function DualStarBridge() {
                 animate={{ opacity: 1, y: 0 }}
                 className="mt-4 p-3 rounded border border-accent-gold/20 bg-accent-gold/5"
               >
-                <div className="text-[10px] text-accent-gold/70 font-serif-sc mb-1">桥接对应</div>
+                <div className="text-[10px] text-accent-gold/70 font-serif-sc mb-1">{t('bridge.legendTitle')}</div>
                 {activeDynasty.map((did) => {
                   const off = DYNASTY_OFFICIALS.find((o) => o.id === did);
                   return off ? (
-                    <div
-                      key={did}
-                      className="text-xs text-text-secondary flex items-center gap-1.5"
-                    >
+                    <div key={did} className="text-xs text-text-secondary flex items-center gap-1.5">
                       <span>{off.icon}</span>
                       <span className="font-serif-sc">{off.name}</span>
                       <span className="text-text-muted">· {off.role}</span>
@@ -504,9 +362,9 @@ export function DualStarBridge() {
         <div className="mt-10 border-t border-accent-gold/10 pt-6">
           <div className="flex items-center gap-2 mb-4">
             <span className="text-accent-gold font-serif-sc font-bold text-sm">
-              🤝 近期联合旨意
+              🤝 {t('bridge.unifiedTitle')}
             </span>
-            <span className="text-text-muted text-xs">Family × Dynasty 协同任务</span>
+            <span className="text-text-muted text-xs">{t('bridge.unifiedSubtitle')}</span>
           </div>
           <div className="space-y-2">
             {UNIFIED_TASKS.map((task) => (
